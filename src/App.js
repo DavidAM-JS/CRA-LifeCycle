@@ -11,6 +11,8 @@ class App extends Component {
       totalPages: '',
       totalImages: '',
       currentImage: '',
+      hasError: false,
+      errorMsg: '',
       show: true,
       next: true
     }
@@ -24,12 +26,12 @@ class App extends Component {
         images: result.hits,
         totalPages: Math.ceil(result.totalHits / 28),
         totalImages: result.totalHits,
-        show: true,  
+        show: true,
       }));
   }
 
   componentDidMount() {
-    console.log("Component Mounted");
+    console.log("Component Mount");
     this.setState({
       input: 'Videogames',
       page: 1,
@@ -40,8 +42,13 @@ class App extends Component {
   }
 
   componentDidUpdate() {
-    console.log("Component Update");
+    console.log("Component DidUpdate");
     this.scroll();
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.log("Component Catch");
+    this.setState({ hasError: true, errorMsg: error.toString() });
   }
 
   searchData = (input) => {
@@ -50,7 +57,7 @@ class App extends Component {
       page: 1,
       show: false,
     }, () => {
-      this.setState({currentImage: 1})
+      this.setState({ currentImage: 1 })
       this.getDataFromApi();
     })
   }
@@ -73,8 +80,10 @@ class App extends Component {
   }
 
   scroll = () => {
-    const element = document.querySelector('.container');
-    element.scrollIntoView({ behavior: "instant", block: "start" });
+    if (!this.state.hasError) {
+      const element = document.querySelector('.container');
+      element.scrollIntoView({ behavior: "instant", block: "start" });
+    }
   }
 
   updateImages = () => {
@@ -87,6 +96,16 @@ class App extends Component {
   }
 
   render() {
+
+    if (this.state.hasError) {
+      return (
+        <div className='text-center'>
+          <p>{this.state.errorMsg}</p>
+          <button onClick={() => this.setState({ hasError: false })}>Back to website</button>
+        </div>
+      );
+    }
+
     return (
       <div className="app container">
         <div>

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ErrorButton from './ErrorButton';
 
 class Searcher extends Component{
     searchRef = React.createRef();
@@ -18,7 +19,8 @@ class Searcher extends Component{
                         <input type="text" className="form-control form-control-lg" placeholder="Search" ref={this.searchRef}/>
                     </div>
                     <div className="form-group col col-lg-2">
-                        <input type="submit" className="btn btn-lg btn-danger btn-block" value="Search"/>
+                        <input type="submit" className="btn btn-lg btn-danger btn-block me-4" value="Search"/>
+                        <ErrorButton/>
                     </div>
                 </div>
             </form>
