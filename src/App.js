@@ -87,16 +87,16 @@ class App extends Component {
   }
 
   updateImages = () => {
-    if (this.state.next) {
-      this.setState({ currentImage: this.state.currentImage + this.state.images.length });
-    }
-    else {
-      this.setState({ currentImage: this.state.currentImage - this.state.images.length })
-    };
+      if (this.state.next) {
+        this.setState({ currentImage: this.state.currentImage + this.state.images.length });
+        console.log(this.state.currentImage);
+      }
+      else {
+        this.setState({ currentImage: this.state.currentImage - this.state.images.length })
+      };
   }
 
   render() {
-
     if (this.state.hasError) {
       return (
         <div className='text-center'>
